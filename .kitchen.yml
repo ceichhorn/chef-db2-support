@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+
+  synced_folders:
+    - ["/Users/ceichhorn/Downloads", "/data"]
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: centos-7.1
+    driver:
+      box: centos-71
+      box_url: https://deploy.gmti.gbahn.net/Images/centos7/vagrant/centos71-cloud-1.0.0.box
+      network:
+        - ["forwarded_port", {guest: 80, host: 8080}]
+
+suites:
+  - name: default
+    run_list:
+      - recipe[db2-support::default]
+    attributes:

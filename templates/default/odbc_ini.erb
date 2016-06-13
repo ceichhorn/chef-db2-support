@@ -1,6 +1,6 @@
 # Driver config for DB2
-[<%= node['db2-support']['server']['name'] %>]
+[<%= node['ruby-support']['server']['name'] %>]
 Driver = IBM i Access ODBC Driver 64-bit
 Description = ODBC connection to MARVEL
-system = <%= node['db2-support']['server']['address'] %>
+system = <%= node['ruby-support']['server']['address'] %>
 DefaultLibraries = QGPL

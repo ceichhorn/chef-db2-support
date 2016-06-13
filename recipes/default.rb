@@ -24,7 +24,7 @@ package 'unixODBC' do
 end
 
 package 'db2-install' do
-  package_name node['db2-support']['package-name']
+  package_name node['ruby-support']['package-name']
   action :install
 end
 
@@ -47,3 +47,12 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   group 'root'
   mode '0644'
 end
+
+# add the Mysql template
+template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/mysql.cnf" do
+  source 'mysql_config.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+

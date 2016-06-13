@@ -1,7 +1,10 @@
 default['yum-gd']['repos'] = %w(centos centos-updates datadog epel gdcustom opsmatic scalr CentOS-Base CentOS-Debuginfo CentOS-fasttrack CentOS-Media yum-ibm)
 default['yum']['gdcustom']['enabled'] = true
-default['db2-support']['package-name'] = 'ibm-iaccess'
-default['db2-support']['server']['name'] = 'marvel'
-default['db2-support']['server']['address'] = 'marvel.ent.gci'
+default['ruby-support']['package-name'] = 'ibm-iaccess'
+default['ruby-support']['server']['name'] = 'marvel'
+default['ruby-support']['server']['address'] = 'marvel.ent.gci'
+default['ruby-support']['server']['port'] = '3820'
+default['ruby-support']['server']['username'] = 'test_user'
+default['ruby-support']['server']['adapter'] = 'mysqldb'
 default['ruby-deployment']['homedir'] = '/opt/rubyapp'
 default['ruby-deployment']['application']['name'] = 'test'

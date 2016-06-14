@@ -23,10 +23,10 @@ package 'unixODBC' do
   action :install
 end
 
-package 'db2-install' do
-  package_name node['ruby-support']['package-name']
-  action :install
-end
+#package 'db2-install' do
+#  package_name node['ruby-support']['package-name']
+#  action :install
+#end
 
 # Create the app directories
 directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/" do
@@ -49,7 +49,7 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
 end
 
 # add the Mysql template
-template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/mysql.cnf" do
+template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/database.yml" do
   source 'mysql_config.erb'
   owner 'root'
   group 'root'

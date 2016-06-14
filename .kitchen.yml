@@ -2,9 +2,6 @@
 driver:
   name: vagrant
 
-  synced_folders:
-    - ["/Users/ceichhorn/Downloads", "/data"]
-
 provisioner:
   name: chef_zero
 

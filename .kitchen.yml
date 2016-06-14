@@ -19,5 +19,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[db2-support::default]
+      - recipe[ruby-support::default]
     attributes:

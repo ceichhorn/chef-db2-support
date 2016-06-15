@@ -1,4 +1,4 @@
-<%= ENV['APPLICATION_ENVIRONMENT'] %>:
+<%= node['ruby-support']['server']['environment'] %>:
   adapter: <%= node['ruby-support']['server']['adapter'] %>
   encoding: utf8
   database: <%= node['ruby-support']['server']['name'] %>

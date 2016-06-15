@@ -23,10 +23,10 @@ package 'unixODBC' do
   action :install
 end
 
-#package 'db2-install' do
+# package 'db2-install' do
 #  package_name node['ruby-support']['package-name']
 #  action :install
-#end
+# end
 
 # Create the app directories
 directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/" do
@@ -56,3 +56,10 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   mode '0644'
 end
 
+# add the secrets template
+template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/secrets.yml" do
+  source 'secrets.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end

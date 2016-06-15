@@ -16,5 +16,6 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[gd-test-helper::default]
       - recipe[ruby-support::default]
     attributes:

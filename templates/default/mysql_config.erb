@@ -3,6 +3,6 @@
   encoding: utf8
   database: <%= node['ruby-support']['server']['name'] %>
   username: <%= node['ruby-support']['server']['username'] %>
-  password: <%= ENV['APPLICATION_DATABASE_PASSWORD'] %>
+  password: <%= @password %>
   host: <%= node['ruby-support']['server']['address'] %>
   port: <%= node['ruby-support']['server']['port'] %>

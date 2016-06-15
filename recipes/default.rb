@@ -8,6 +8,8 @@
 include_recipe 'gdp-base-linux'
 include_recipe 'yum-gd'
 
+credentials = data_bag_item(node['ruby-support']['databag']['name'], node['ruby-support']['databag']['item'])
+
 # packages that are a pre-req for db2
 package 'epel-release' do
   action :install
@@ -40,6 +42,7 @@ directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appl
   mode '0755'
   action :create
 end
+
 # add the DB2 template
 template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/odbc.ini" do
   source 'odbc_ini.erb'
@@ -54,6 +57,10 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   owner 'root'
   group 'root'
   mode '0644'
+  variables(
+    :password => credentials['devdbpass']
+  )
+  sensitive true
 end
 
 # add the secrets template

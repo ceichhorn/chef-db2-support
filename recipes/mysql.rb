@@ -6,7 +6,6 @@
 
 # install base tools & daemons
 include_recipe 'gdp-base-linux'
-include_recipe 'yum-gd'
 
 # packages that are a pre-req for db2
 package 'epel-release' do
@@ -18,15 +17,6 @@ end
 package 'curl' do
   action :install
 end
-
-package 'unixODBC' do
-  action :install
-end
-
-#package 'db2-install' do
-#  package_name node['ruby-support']['package-name']
-#  action :install
-#end
 
 # Create the app directories
 directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/" do
@@ -40,19 +30,25 @@ directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appl
   mode '0755'
   action :create
 end
-# add the DB2 template
-template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/odbc.ini" do
-  source 'odbc_ini.erb'
-  owner 'root'
-  group 'root'
-  mode '0644'
-end
+
+credential = data_bag_item(node['ruby-support']['databag']['name'], node['ruby-support']['databag']['item'])
 
 # add the Mysql template
 template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/database.yml" do
   source 'mysql_config.erb'
-  owner 'root'
+  owner node['ruby-support']['user']
+  group 'root'
+  mode '0644'
+  variables(
+    :password => credential['devdbpass']
+  )
+  sensitive true
+end
+
+# add the secrets template
+template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/secrets.yml" do
+  source 'secrets.erb'
+  owner node['ruby-support']['user']
   group 'root'
   mode '0644'
 end
-

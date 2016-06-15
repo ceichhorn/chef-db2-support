@@ -1,5 +1,6 @@
 # default['yum-gd']['repos'] = %w(centos centos-updates datadog epel gdcustom opsmatic scalr CentOS-Base CentOS-Debuginfo CentOS-fasttrack CentOS-Media yum-ibm)
 default['yum']['gdcustom']['enabled'] = true
+default['ruby-support']['user'] = 'rubyapp'
 default['ruby-support']['package-name'] = 'ibm-iaccess'
 default['ruby-support']['server']['environment'] = 'development'
 default['ruby-support']['server']['name'] = 'marvel'

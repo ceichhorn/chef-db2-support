@@ -6,7 +6,6 @@
 
 # install base tools & daemons
 include_recipe 'gdp-base-linux'
-include_recipe 'yum-gd'
 
 # packages that are a pre-req for db2
 package 'epel-release' do
@@ -54,7 +53,7 @@ credential = data_bag_item(node['ruby-support']['databag']['name'], node['ruby-s
 # add the Mysql template
 template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/database.yml" do
   source 'mysql_config.erb'
-  owner 'root'
+  owner node['ruby-support']['user']
   group 'root'
   mode '0644'
   variables(
@@ -66,7 +65,7 @@ end
 # add the secrets template
 template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/secrets.yml" do
   source 'secrets.erb'
-  owner 'root'
+  owner node['ruby-support']['user']
   group 'root'
   mode '0644'
 end

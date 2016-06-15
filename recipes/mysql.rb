@@ -50,5 +50,5 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   source 'secrets.erb'
   owner node['ruby-support']['user']
   group 'root'
-  mode '0644'
+  mode '0755'
 end

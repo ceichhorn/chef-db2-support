@@ -15,7 +15,17 @@ platforms:
 
 suites:
   - name: default
+    data_bags_path: test/integration/data_bags
     run_list:
       - recipe[gd-test-helper::default]
       - recipe[ruby-support::default]
     attributes:
+      ruby-support:
+        databag:
+          name: 'commerce-solutions'
+          item: 'single-copy-self-service'
+      fake_databags:
+        - data_bag: 'commerce-solutions'
+          content:
+            id: 'single-copy-self-service'
+            devdbpass: "<%= ENV['devdbpass'] %>"

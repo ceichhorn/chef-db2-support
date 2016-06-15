@@ -8,8 +8,6 @@
 include_recipe 'gdp-base-linux'
 include_recipe 'yum-gd'
 
-credentials = data_bag_item(node['ruby-support']['databag']['name'], node['ruby-support']['databag']['item'])
-
 # packages that are a pre-req for db2
 package 'epel-release' do
   action :install
@@ -51,6 +49,8 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   mode '0644'
 end
 
+credential = data_bag_item(node['ruby-support']['databag']['name'], node['ruby-support']['databag']['item'])
+
 # add the Mysql template
 template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/database.yml" do
   source 'mysql_config.erb'
@@ -58,7 +58,7 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   group 'root'
   mode '0644'
   variables(
-    :password => credentials['devdbpass']
+    :password => credential['devdbpass']
   )
   sensitive true
 end

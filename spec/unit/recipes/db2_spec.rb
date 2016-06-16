@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'fauxhai'
 
-describe 'ruby-support::mysql' do
+describe 'ruby-support::db2' do
   context 'On Centos 7.1 with defaults set' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '7.1.1503') do |node|
@@ -25,11 +25,11 @@ describe 'ruby-support::mysql' do
     end
 
     it 'creates the database template' do
-      expect(chef_run).to create_template('/opt/rubyapp/test/config/database.yml')
+      expect(chef_run).to create_template('/opt/rubyapp/test/config/odbc.ini')
     end
 
     # installed packages
-    package_list = ['epel-release', 'pygpgme', 'curl']
+    package_list = ['unixODBC', 'db2-install']
 
     package_list.each do |name|
       it 'installs ' + name do

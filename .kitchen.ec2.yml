@@ -28,11 +28,11 @@ platforms:
       username: <%= ENV['AWS_CENTOS7_USERNAME'] %>
 
 suites:
-  - name: default
+  - name: mysql
     data_bags_path: test/integration/data_bags
     run_list:
       - recipe[gd-test-helper::default]
-      - recipe[ruby-support::default]
+      - recipe[ruby-support::mysql]
     attributes:
       ruby-support:
         databag:
@@ -43,3 +43,9 @@ suites:
           content:
             id: 'single-copy-self-service'
             devdbpass: "<%= ENV['devdbpass'] %>"
+  - name: db2
+    data_bags_path: test/integration/data_bags
+    run_list:
+      - recipe[gd-test-helper::default]
+      - recipe[ruby-support::db2]
+    attributes:

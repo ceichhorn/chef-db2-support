@@ -21,7 +21,12 @@ package 'curl' do
   action :install
 end
 
-# create the application directories
+# create the application directories and user
+user node['ruby-support']['user'] do
+  action :create
+  home node['ruby-support']['homedir']
+end
+
 directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/" do
   recursive true
   mode '0755'

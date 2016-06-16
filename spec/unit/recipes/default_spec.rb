@@ -1,12 +1,3 @@
-#
-# Cookbook Name:: db2-support
-# Spec:: default
-#
-# Copyright (C) 2016 Gannett
-#
-# All rights reserved - Do Not Redistribute
-#
-
 require 'spec_helper'
 require 'fauxhai'
 
@@ -51,6 +42,6 @@ describe 'db2-support::default' do
         expect(chef_run).to install_package(name)
       end
     end
-   
+
  end
 end

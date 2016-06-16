@@ -15,7 +15,7 @@ credential = data_bag_item(node['ruby-support']['databag']['name'], node['ruby-s
 # create the mySQL database.yml file
 template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/database.yml" do
   source 'mysql_config.erb'
-  owner node['ruby-support']['user']
+  owner node['ruby-deployment']['user']
   group 'root'
   mode '0755'
   variables(

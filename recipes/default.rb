@@ -22,9 +22,9 @@ package 'curl' do
 end
 
 # create the application directories and user
-user node['ruby-support']['user'] do
+user node['ruby-deployment']['user'] do
   action :create
-  home node['ruby-support']['homedir']
+  home node['ruby-deployment']['homedir']
 end
 
 directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/" do
@@ -42,7 +42,7 @@ end
 # create the secrets.yml file
 template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/secrets.yml" do
   source 'secrets.erb'
-  owner node['ruby-support']['user']
+  owner node['ruby-deployment']['user']
   group 'root'
   mode '0755'
 end

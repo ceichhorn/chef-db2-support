@@ -34,6 +34,10 @@ describe 'ruby-support::default' do
       expect(chef_run).to create_template('/opt/rubyapp/test/config/secrets.yml')
     end
 
+    it 'creates rubyapp user' do
+      expect(chef_run).to create_user('rubyapp')
+    end
+
     # installed packages
     package_list = ['epel-release', 'pygpgme', 'curl']
 

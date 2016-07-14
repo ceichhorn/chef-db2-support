@@ -39,10 +39,12 @@ directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appl
   action :create
 end
 
-# create the secrets.yml file
-template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/secrets.yml" do
-  source 'secrets.erb'
-  owner node['ruby-deployment']['user']
-  group 'root'
-  mode '0755'
+# run your migrate command
+bash 'migrate' do
+  cwd "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}"
+  code node['ruby-deployment']['application']['migration_command']
+  user node['ruby-deployment']['user']
+  notifies :create, 'file[migrated.txt]', :immediately
+  only_if { node['ruby-deployment']['application']['migrate'] && ::File.exist?("#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/migrated.txt").! } # rubocop:disable Style/LineLength
 end
+

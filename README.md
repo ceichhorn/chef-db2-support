@@ -6,9 +6,9 @@ Supported Platforms
     Centos 7.1
 
 Usage
-ruby-deployment::default
+ruby-deployment-support::default
 
-The default recipe will install templates for the different required applications.  ie Mysql DB2, secrets.yml.
-
-Include ruby-support withing ruby-deployment after you unpack the application and before you run the migrate command. 
+The default recipe will install the needed config files, and run the migrate command. 
+ 
+Include ruby-deployment-support within the role cookbook after ruby-deployment.
 

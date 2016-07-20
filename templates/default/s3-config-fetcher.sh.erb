@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source /etc/bashrc
+source /etc/profile.d/scalr_globals.sh
 
 # if environment is null, set environment to development
 if [[ -z $<%= node['ruby-deployment-support']['server']['environment'] %> ]]; then
@@ -11,16 +12,16 @@ fi
 TEMP_CONFIG_DIR="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>-configs"
 
 # set temporary config file
-TEMP_CONFIG_FILE="${TEMP_CONFIG_DIR}/<%= node['ruby-deployment']['application']['name'] %>-${<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
+TEMP_CONFIG_FILE="${TEMP_CONFIG_DIR}/<%= node['ruby-deployment']['application']['name'] %>-$ENVIRONMENT-database.yml"
 
 # set target config file
-TARGET_CONFIG_FILE="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>/<%= node['ruby-deployment-support']['config-dir'] %>/<%= node['ruby-deployment']['application']['name'] %>-{$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
+TARGET_CONFIG_FILE="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>/<%= node['ruby-deployment-support']['config-dir'] %>/<%= node['ruby-deployment']['application']['name'] %>-$ENVIRONMENT-database.yml"
 
 date
-echo "Fetching <%= node['ruby-deployment']['application']['name'] %>/${<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
+echo "Fetching <%= node['ruby-deployment']['application']['name'] %>-$ENVIRONMENT-database.yml"
 mkdir -p $TEMP_CONFIG_DIR
 rm -f $TEMP_CONFIG_FILE
-s3cmd -c <%= node['ruby-deployment']['home'] %>/.s3cfg get s3://<%= node['ruby-deployment-support']['s3-config-bucket'] %>/<%= node['ruby-deployment']['application']['name'] %>-$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml $TEMP_CONFIG_FILE
+s3cmd -c <%= node['ruby-deployment']['home'] %>/.s3cfg get s3://<%= node['ruby-deployment-support']['s3-config-bucket'] %>/<%= node['ruby-deployment']['application']['name'] %>-$ENVIRONMENT-database.yml $TEMP_CONFIG_FILE
 
 # Verify s3cmd succeeded
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi

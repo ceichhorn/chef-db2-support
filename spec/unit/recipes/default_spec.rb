@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'fauxhai'
 
-describe 'db2-support::default' do
+describe 'ruby-deployment-support::default' do
   context 'On Centos 7.1 with defaults set' do
     cached(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '7.1.1503') do |node|

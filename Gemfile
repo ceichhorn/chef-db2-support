@@ -1,6 +1,11 @@
 source 'https://rubygems.org'
 
+# custom gems and versions
+gem 'chef-handler-datadog', '= 0.6.0'
+gem 'chef-handler-opsmatic', '= 0.0.19'
+gem 'chef-handler-profiler', '= 0.0.2'
 gem 'chef-zero', '= 4.7.0'
+gem 'test-kitchen', '= 1.10.2'
 
 # chefdk gem pinnings
 # https://github.com/chef/chef-dk/blob/bc4b19f8ae7f613a929058cf4cf53514713109e9/Gemfile.lock
@@ -144,7 +149,6 @@ group :integration do
   gem 'nori', '= 2.6.0'
   gem 'octokit', '= 4.3.0'
   gem 'ohai', '= 8.16.0'
-  # gem 'opscode-pushy-client', '= 2.0.2'
   gem 'os', '= 0.9.6'
   gem 'paint', '= 1.0.1'
   gem 'parser', '= 2.3.1.2'
@@ -176,7 +180,6 @@ group :integration do
   gem 'rubocop', '= 0.39.0'
   gem 'ruby-prof', '= 0.15.9'
   gem 'ruby-progressbar', '= 1.8.1'
-  gem 'ruby-shadow', '= 2.5.0'
   gem 'rubyntlm', '= 0.6.0'
   gem 'rubyzip', '= 1.2.0'
   gem 'rufus-lru', '= 1.1.0'

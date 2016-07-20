@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: ruby-deployment-support
-# Recipe:: deploy
+# Recipe:: default
 #
 # Copyright (C) 2016 Gannett
 #
@@ -39,6 +39,42 @@ directory "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appl
   action :create
 end
 
+# required package for db2 odbc connection
+package 'unixODBC' do
+  action :install
+  only_if { node['ruby-deployment-support']['odbc']['install'] }
+end
+
+# install db2 rpm
+package 'db2-install' do
+  package_name node['ruby-deployment-support']['package-name']
+  action :install
+  only_if { node['ruby-deployment-support']['odbc']['install'] }
+end
+
+# create the db2 odbc.ini file
+template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/odbc.ini" do
+  source 'odbc_ini.erb'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  only_if { node['ruby-deployment-support']['odbc']['install'] }
+end
+
+# grab secrets.yml from s3
+template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/secrets.yml" do
+  source 's3-secrets-fetcher.sh.erb'
+  owner node['ruby-deployment']['user']
+  mode '0755'
+end
+
+# grab database.yml from s3
+template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/database.yml" do
+  source 's3-config-fetcher.sh.erb'
+  owner node['ruby-deployment']['user']
+  mode '0755'
+end
+
 # run your migrate command
 bash 'migrate' do
   cwd "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}"
@@ -48,3 +84,26 @@ bash 'migrate' do
   only_if { node['ruby-deployment']['application']['migrate'] && ::File.exist?("#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/migrated.txt").! } # rubocop:disable Style/LineLength
 end
 
+file 'migrated.txt' do
+  owner node['ruby-deployment']['user']
+  mode '0644'
+  path "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/migrated.txt"
+  action :nothing
+end
+
+# add the nginx template
+template "#{node['nginx']['dir']}/sites-available/#{node['ruby-deployment']['application']['name']}" do
+  source 'nginx_site.erb'
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
+# link the template and restart nginx
+from_url = "#{node['nginx']['dir']}/sites-enabled/#{node['ruby-deployment']['application']['name']}"
+to_url = "#{node['nginx']['dir']}/sites-available/#{node['ruby-deployment']['application']['name']}"
+
+link from_url do
+  to to_url
+  notifies :restart, 'service[nginx]'
+end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'chef-db2-support::default' do
+describe 'ruby-deployment-support::default' do
   # Serverspec examples can be found at
   # http://serverspec.org/resource_types.html
   it 'does something' do

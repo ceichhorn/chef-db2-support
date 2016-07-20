@@ -1,14 +1,16 @@
-default['yum-gd']['repos'] = %w(centos centos-updates datadog epel gdcustom opsmatic scalr CentOS-Base CentOS-Debuginfo CentOS-fasttrack CentOS-Media yum-ibm)
 default['yum']['gdcustom']['enabled'] = true
-default['ruby-support']['package-name'] = 'ibm-iaccess'
-default['ruby-support']['server']['environment'] = 'development'
-default['ruby-support']['server']['name'] = 'marvel'
-default['ruby-support']['server']['address'] = 'marvel.ent.gci'
-default['ruby-support']['server']['port'] = '3820'
-default['ruby-support']['server']['username'] = 'test_user'
-default['ruby-support']['server']['adapter'] = 'mysqldb'
-default['ruby-support']['databag']['name'] = 'commerce-solutions'
-default['ruby-support']['databag']['item'] = 'single-copy-self-service'
+default['ruby-deployment-support']['package-name'] = 'ibm-iaccess'
+default['ruby-deployment-support']['server']['environment'] = 'development'
+default['ruby-deployment-support']['server']['name'] = 'marvel'
+default['ruby-deployment-support']['server']['address'] = 'marvel.ent.gci'
+default['ruby-deployment-support']['server']['port'] = '3820'
+default['ruby-deployment-support']['server']['username'] = 'test_user'
+default['ruby-deployment-support']['server']['adapter'] = 'mysqldb'
+default['ruby-deployment-support']['databag']['name'] = 'commerce-solutions'
+default['ruby-deployment-support']['databag']['item'] = 'single-copy-self-service'
+default['ruby-deployment-support']['config-dir'] = 'config'
+default['ruby-deployment-support']['s3-config-bucket'] = 'gdp-commerce-configs'
+default['ruby-deployment-support']['odbc']['install'] = false
 default['ruby-deployment']['application']['name'] = 'test'
 default['ruby-deployment']['application']['env_vars'] =
   [{ 'name' => 'APPLICATION_EMAIL', 'value' => 'jrmoore@gannett.com' },

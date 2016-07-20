@@ -1,8 +1,16 @@
 require 'serverspec'
+require 'helpers'
+require 'pathname'
+require 'json'
 
-if (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM).nil?
-  set :backend, :exec
-else
+if ENV['OS'] == 'Windows_NT'
   set :backend, :cmd
-  set :os, family: 'windows'
+  # On Windows, set the target host's OS explicitly
+  set :os, :family => 'windows'
+  $node = ::JSON.parse(File.read('c:\windows\temp\serverspec\node.json'))
+else
+  set :backend, :exec
+  $node = ::JSON.parse(File.read('/tmp/serverspec/node.json'))
 end
+
+set :path, '/sbin:/usr/local/sbin:/usr/sbin:$PATH' unless os[:family] == 'windows'

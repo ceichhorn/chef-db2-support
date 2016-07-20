@@ -1,4 +1,4 @@
-# chef-ruby-support
+# chef-ruby-deployment-support
 
 Supported Platforms
 
@@ -8,7 +8,6 @@ Supported Platforms
 Usage
 ruby-deployment-support::default
 
-The default recipe will install the needed config files, and run the migrate command. 
- 
-Include ruby-deployment-support within the role cookbook after ruby-deployment.
+The default recipe will install the needed config files, and run the migrate command.
 
+Include ruby-deployment-support within the role cookbook after ruby-deployment.

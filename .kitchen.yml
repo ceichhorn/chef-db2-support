@@ -18,9 +18,9 @@ suites:
     data_bags_path: test/integration/data_bags
     run_list:
       - recipe[gd-test-helper::default]
-      - recipe[ruby-support::mysql]
+      - recipe[ruby-deployment-support::mysql]
     attributes:
-      ruby-support:
+      ruby-deployment-support:
         databag:
           name: 'commerce-solutions'
           item: 'single-copy-self-service'
@@ -33,5 +33,5 @@ suites:
     data_bags_path: test/integration/data_bags
     run_list:
       - recipe[gd-test-helper::default]
-      - recipe[ruby-support::db2]
+      - recipe[ruby-deployment-support::db2]
     attributes:

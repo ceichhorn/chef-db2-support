@@ -1,0 +1,45 @@
+#!/bin/bash
+
+source /etc/bashrc
+
+# if environment is null, set environment to development
+if [[ -z $<%= node['ruby-deployment-support']['server']['environment'] %> ]]; then
+  <%= node['ruby-deployment-support']['server']['environment'] %>="development"
+fi
+
+# set temporary config directory
+TEMP_CONFIG_DIR="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>-configs"
+
+# set temporary config file
+TEMP_CONFIG_FILE="${TEMP_CONFIG_DIR}/${<%= node['ruby-deployment']['application']['app_env'] %>}.yml"
+
+# set target config file
+TARGET_CONFIG_FILE="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>/<%= node['ruby-deployment-support']['config-dir'] %>/{<%= node['ruby-deployment']['application']['name'] %>/$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
+
+date
+echo "Fetching <%= node['ruby-deployment']['application']['name'] %>/${<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
+mkdir -p $TEMP_CONFIG_DIR
+rm -f $TEMP_CONFIG_FILE
+s3cmd -c <%= node['ruby-deployment']['home'] %>/.s3cfg get s3://<%= node['ruby-deployment-support']['s3-config-bucket'] %>/<%= node['ruby-deployment']['application']['name'] %>/$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml $TEMP_CONFIG_FILE
+
+# Verify s3cmd succeeded
+rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+
+if [ -f $TARGET_CONFIG_FILE ]; then
+  diff $TEMP_CONFIG_FILE $TARGET_CONFIG_FILE
+  rc=$?;
+
+  if [[ $rc == 0 ]]; then
+    echo "No Changes Found"
+    exit 0;
+  elif [[ $rc == 2 ]]; then
+    echo "BAD FILE, IGNORING"
+    exit $rc;
+  else
+    echo "Changes Found, Deploying New Config"
+  fi
+fi
+
+# TODO run validation command
+
+cp -v $TEMP_CONFIG_FILE $TARGET_CONFIG_FILE

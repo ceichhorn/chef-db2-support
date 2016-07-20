@@ -10,6 +10,7 @@ default['ruby-deployment-support']['databag']['name'] = 'commerce-solutions'
 default['ruby-deployment-support']['databag']['item'] = 'single-copy-self-service'
 default['ruby-deployment-support']['config-dir'] = 'config'
 default['ruby-deployment-support']['s3-config-bucket'] = 'gdp-commerce-configs'
+default['ruby-deployment-support']['s3-config-fetcher']['user'] = 'rubyapp'
 default['ruby-deployment-support']['odbc']['install'] = false
 default['ruby-deployment']['application']['name'] = 'test'
 default['ruby-deployment']['application']['env_vars'] =

@@ -11,16 +11,16 @@ fi
 TEMP_CONFIG_DIR="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>-configs"
 
 # set temporary config file
-TEMP_CONFIG_FILE="${TEMP_CONFIG_DIR}/${<%= node['ruby-deployment']['application']['app_env'] %>}.yml"
+TEMP_CONFIG_FILE="${TEMP_CONFIG_DIR}/<%= node['ruby-deployment']['application']['name'] %>-${<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
 
 # set target config file
-TARGET_CONFIG_FILE="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>/<%= node['ruby-deployment-support']['config-dir'] %>/{<%= node['ruby-deployment']['application']['name'] %>/$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
+TARGET_CONFIG_FILE="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>/<%= node['ruby-deployment-support']['config-dir'] %>/<%= node['ruby-deployment']['application']['name'] %>-{$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
 
 date
 echo "Fetching <%= node['ruby-deployment']['application']['name'] %>/${<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml"
 mkdir -p $TEMP_CONFIG_DIR
 rm -f $TEMP_CONFIG_FILE
-s3cmd -c <%= node['ruby-deployment']['home'] %>/.s3cfg get s3://<%= node['ruby-deployment-support']['s3-config-bucket'] %>/<%= node['ruby-deployment']['application']['name'] %>/$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml $TEMP_CONFIG_FILE
+s3cmd -c <%= node['ruby-deployment']['home'] %>/.s3cfg get s3://<%= node['ruby-deployment-support']['s3-config-bucket'] %>/<%= node['ruby-deployment']['application']['name'] %>-$<%= node['ruby-deployment']['application']['app_env'] %>}-database.yml $TEMP_CONFIG_FILE
 
 # Verify s3cmd succeeded
 rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
@@ -43,3 +43,7 @@ fi
 # TODO run validation command
 
 cp -v $TEMP_CONFIG_FILE $TARGET_CONFIG_FILE
+
+if [ "$1" == "reload" ]; then
+  service nginx restart
+fi

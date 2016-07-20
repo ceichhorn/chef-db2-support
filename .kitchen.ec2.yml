@@ -32,8 +32,6 @@ suites:
     data_bags_path: test/integration/data_bags
     run_list:
       - recipe[gd-test-helper::default]
-      - recipe[ruby-deployment-support::s3_config_fetcher]
-      - recipe[ruby-deployment-support::s3_secrets_fetcher]
       - recipe[ruby-deployment-support::default]
     attributes:
       ruby-deployment-support:

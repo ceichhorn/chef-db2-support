@@ -61,6 +61,9 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   only_if { node['ruby-deployment-support']['odbc']['install'] }
 end
 
+include_recipe 'ruby-deployment-support::s3-config-fetcher'
+include_recipe 'ruby-deployment-support::s3-secrets-fetcher'
+
 # run your migrate command
 bash 'migrate' do
   cwd "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}"

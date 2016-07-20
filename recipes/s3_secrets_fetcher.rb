@@ -1,3 +1,12 @@
+#
+# Cookbook Name:: ruby-deployment-support
+# Recipe:: s3-secrets-fetcher
+#
+# Copyright (C) 2016 Gannett
+#
+# All rights reserved - Do Not Redistribute
+#
+
 include_recipe 's3cmd'
 
 secrets_fetcher_script = "#{node['ruby-deployment']['home']}/#{node['ruby-deployment']['application']['name']}-s3-secrets-fetcher.sh"

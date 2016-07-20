@@ -1,3 +1,12 @@
+#
+# Cookbook Name:: ruby-deployment-support
+# Recipe:: s3-config-fetcher
+#
+# Copyright (C) 2016 Gannett
+#
+# All rights reserved - Do Not Redistribute
+#
+
 include_recipe 's3cmd'
 
 config_fetcher_script = "#{node['ruby-deployment']['home']}/#{node['ruby-deployment']['application']['name']}-s3-config-fetcher.sh"

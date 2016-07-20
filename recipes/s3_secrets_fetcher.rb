@@ -14,16 +14,16 @@ end
 template secrets_fetcher_script do
   source 's3-secrets-fetcher.sh.erb'
   mode 0755
-  owner node['ruby-deployment-support']['s3-secrets-fetcher']['user']
+  owner node['ruby-deployment-support']['s3-fetcher']['user']
 end
 
 cron 's3-secrets-fetcher' do
   minute '*/10'
   command secrets_fetcher_reloading_command
-  user node['ruby-deployment-support']['s3-secrets-fetcher']['user']
+  user node['ruby-deployment-support']['s3-fetcher']['user']
 end
 
 execute 's3-secrets-command' do
-  command "su #{node['ruby-deployment-support']['s3-secrets-fetcher']['user']} -l -c '#{secrets_fetcher_command}'"
+  command "su #{node['ruby-deployment-support']['s3-fetcher']['user']} -l -c '#{secrets_fetcher_command}'"
   user 'root'
 end

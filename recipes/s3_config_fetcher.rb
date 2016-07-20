@@ -14,16 +14,16 @@ end
 template config_fetcher_script do
   source 's3-config-fetcher.sh.erb'
   mode 0755
-  owner node['ruby-deployment-support']['s3-config-fetcher']['user']
+  owner node['ruby-deployment-support']['s3-fetcher']['user']
 end
 
 cron 's3-config-fetcher' do
   minute '*/10'
   command config_fetcher_reloading_command
-  user node['ruby-deployment-support']['s3-config-fetcher']['user']
+  user node['ruby-deployment-support']['s3-fetcher']['user']
 end
 
 execute 's3-config-command' do
-  command "su #{node['ruby-deployment-support']['s3-config-fetcher']['user']} -l -c '#{config_fetcher_command}'"
+  command "su #{node['ruby-deployment-support']['s3-fetcher']['user']} -l -c '#{config_fetcher_command}'"
   user 'root'
 end

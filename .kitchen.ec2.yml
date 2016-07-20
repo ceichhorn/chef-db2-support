@@ -28,24 +28,16 @@ platforms:
       username: <%= ENV['AWS_CENTOS7_USERNAME'] %>
 
 suites:
-  - name: mysql
+  - name: default
     data_bags_path: test/integration/data_bags
     run_list:
       - recipe[gd-test-helper::default]
-      - recipe[ruby-deployment-support::mysql]
+      - recipe[ruby-deployment-support::s3_config_fetcher]
+      - recipe[ruby-deployment-support::s3_secrets_fetcher]
+      - recipe[ruby-deployment-support::default]
     attributes:
       ruby-deployment-support:
-        databag:
-          name: 'commerce-solutions'
-          item: 'single-copy-self-service'
-      fake_databags:
-        - data_bag: 'commerce-solutions'
-          content:
-            id: 'single-copy-self-service'
-            devdbpass: "<%= ENV['devdbpass'] %>"
-  - name: db2
-    data_bags_path: test/integration/data_bags
-    run_list:
-      - recipe[gd-test-helper::default]
-      - recipe[ruby-deployment-support::db2]
-    attributes:
+        server:
+            environment: 'development'
+        odbc:
+            install: true

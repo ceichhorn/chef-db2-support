@@ -44,7 +44,7 @@ group :integration do
   gem 'chefspec', '= 4.7.0'
   gem 'cleanroom', '= 1.0.0'
   gem 'coderay', '= 1.1.1'
-  gem 'compat_resource', '= 12.10.6'
+  gem 'compat_resource', '= 12.10.7'
   gem 'cookbook-omnifetch', '= 0.2.3'
   gem 'cucumber-core', '= 1.5.0'
   gem 'debug_inspector', '= 0.0.2'

@@ -53,7 +53,7 @@ package 'db2-install' do
 end
 
 # create the db2 odbc.ini file
-template "/etc/odbc.ini" do
+template '/etc/odbc.ini' do
   source 'odbc_ini.erb'
   owner 'root'
   group 'root'

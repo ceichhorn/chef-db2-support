@@ -26,7 +26,7 @@ describe 'ruby-deployment-support::s3_secrets_fetcher' do
     end
     it 'creates s3-secrets-fetcher with contents' do
       expect(chef_run).to render_file('/opt/rubyapp/test-s3-secrets-fetcher.sh').with_content('TEMP_CONFIG_DIR="/opt/rubyapp/test-configs"')
-      expect(chef_run).to render_file('/opt/rubyapp/test-s3-secrets-fetcher.sh').with_content('TARGET_CONFIG_FILE="/opt/rubyapp/test/config/test-$ENVIRONMENT-secrets.yml"')
+      expect(chef_run).to render_file('/opt/rubyapp/test-s3-secrets-fetcher.sh').with_content('TARGET_CONFIG_FILE="/opt/rubyapp/test/config/secrets.yml"')
       expect(chef_run).to render_file('/opt/rubyapp/test-s3-secrets-fetcher.sh').with_content('s3cmd -c /opt/rubyapp/.s3cfg get s3://gdp-commerce-configs/test-$ENVIRONMENT-secrets.yml $TEMP_CONFIG_FILE')
       expect(chef_run).to render_file('/opt/rubyapp/test-s3-secrets-fetcher.sh').with_content('cp -v $TEMP_CONFIG_FILE $TARGET_CONFIG_FILE')
       expect(chef_run).to render_file('/opt/rubyapp/test-s3-secrets-fetcher.sh').with_content('service nginx restart')

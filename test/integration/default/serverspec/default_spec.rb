@@ -29,14 +29,4 @@ describe 'ruby-deployment-support::default' do
     it { should be_directory }
   end
 
-  describe file("opt/rubyapp") do
-    it { should exist }
-    it { should be_directory }
-  end
-
-  describe file("opt/rubyapp/test/config/") do
-    it { should exist }
-    it { should be_directory }
-  end
-
 end

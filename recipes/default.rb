@@ -42,14 +42,14 @@ end
 # required package for db2 odbc connection
 package 'unixODBC' do
   action :install
-  only_if { node['ruby-deployment-support']['odbc']['install'] }
+  only_if { node['ruby-deployment-support']['db2']['install'] }
 end
 
 # install db2 rpm
 package 'db2-install' do
   package_name node['ruby-deployment-support']['package-name']
   action :install
-  only_if { node['ruby-deployment-support']['odbc']['install'] }
+  only_if { node['ruby-deployment-support']['db2']['install'] }
 end
 
 # create the db2 odbc.ini file
@@ -58,11 +58,8 @@ template "/etc/odbc.ini" do
   owner 'root'
   group 'root'
   mode '0755'
-  only_if { node['ruby-deployment-support']['odbc']['install'] }
+  only_if { node['ruby-deployment-support']['db2']['install'] }
 end
-
-include_recipe 'ruby-deployment-support::s3_config_fetcher'
-include_recipe 'ruby-deployment-support::s3_secrets_fetcher'
 
 # run your migrate command
 bash 'migrate' do

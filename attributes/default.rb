@@ -12,6 +12,7 @@ default['ruby-deployment-support']['s3-fetcher']['user'] = 'rubyapp'
 default['ruby-deployment-support']['db2']['install'] = false
 default['ruby-deployment']['application']['migrate'] = true
 default['ruby-deployment']['homedir'] = '/opt/rubyapp'
+default['ruby-deployment']['user'] = 'rubyapp'
 default['ruby-deployment']['application']['name'] = 'test'
 default['ruby-deployment']['application']['env_vars'] =
   [{ 'name' => 'APPLICATION_EMAIL', 'value' => 'jrmoore@gannett.com' },

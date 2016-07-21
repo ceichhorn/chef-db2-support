@@ -38,4 +38,4 @@ suites:
         server:
             environment: 'development'
         odbc:
-            install: true
+            install: false

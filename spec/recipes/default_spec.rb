@@ -26,16 +26,50 @@ describe 'ruby-deployment-support::default' do
       expect(chef_run).to create_directory('/opt/rubyapp/test/')
     end
 
+    it 'creates rubyapp user' do
+      expect(chef_run).to create_user('rubyapp')
+    end
+
+    it 'creates the s3-config-fetcher script' do
+      expect(chef_run).to create_template('/opt/rubyapp/test-s3-config-fetcher.sh')
+    end
+
+    it 'creates the s3-secrets-fetcher script' do
+      expect(chef_run).to create_template('/opt/rubyapp/test-s3-secrets-fetcher.sh')
+    end
+
+    it 'does not create the odbc.ini file' do
+      expect(chef_run).to_not create_template('/etc/odbc.ini')
+    end
+
+    it 'does nothing on migrated.txt file' do
+      file = chef_run.file('migrated.txt')
+      expect(file).to do_nothing
+    end
+
+    it 'run migrate script' do
+      expect(chef_run).to run_bash('migrate')
+    end
+
+    it 'creates migrated.txt file' do
+      resource = chef_run.bash('migrate')
+      expect(resource).to notify('file[migrated.txt]').to(:create).immediately
+    end
+
     it 'creates an app config directory' do
       expect(chef_run).to create_directory('/opt/rubyapp/test/config/')
     end
 
-    it 'creates the odbc template' do
-      expect(chef_run).to create_template('/opt/rubyapp/test/config/odbc.ini')
+    it 'does not install unixODBC' do
+      expect(chef_run).to_not install_package('unixODBC')
+    end
+
+    it 'does not install db2-install' do
+      expect(chef_run).to_not install_package('db2-install')
     end
 
     # installed packages
-    package_list = ['epel-release', 'pygpgme', 'curl', 'unixODBC', 'ibm-iaccess']
+    package_list = ['epel-release', 'pygpgme', 'curl']
 
     package_list.each do |name|
       it 'installs ' + name do

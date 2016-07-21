@@ -10,6 +10,8 @@ default['ruby-deployment-support']['config-dir'] = 'config'
 default['ruby-deployment-support']['s3-config-bucket'] = 'gdp-commerce-configs'
 default['ruby-deployment-support']['s3-fetcher']['user'] = 'rubyapp'
 default['ruby-deployment-support']['odbc']['install'] = false
+default['ruby-deployment']['application']['migrate'] = true
+default['ruby-deployment']['homedir'] = '/opt/rubyapp'
 default['ruby-deployment']['application']['name'] = 'test'
 default['ruby-deployment']['application']['env_vars'] =
   [{ 'name' => 'APPLICATION_EMAIL', 'value' => 'jrmoore@gannett.com' },

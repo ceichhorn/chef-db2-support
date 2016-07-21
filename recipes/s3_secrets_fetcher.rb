@@ -10,7 +10,7 @@
 include_recipe 's3cmd'
 
 secrets_fetcher_script = "#{node['ruby-deployment']['home']}/#{node['ruby-deployment']['application']['name']}-s3-secrets-fetcher.sh"
-secrets_fetcher_log_redirect = ">> /var/log/node/#{node['ruby-deployment']['name']}-cron-secrets.log 2>&1"
+secrets_fetcher_log_redirect = ">> /var/log/rubyapp/#{node['ruby-deployment']['application']['name']}-cron-secrets.log 2>&1"
 secrets_fetcher_command = "#{secrets_fetcher_script} #{secrets_fetcher_log_redirect}"
 secrets_fetcher_reloading_command = "#{secrets_fetcher_script} reload #{secrets_fetcher_log_redirect}"
 

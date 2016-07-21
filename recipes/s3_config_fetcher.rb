@@ -10,7 +10,7 @@
 include_recipe 's3cmd'
 
 config_fetcher_script = "#{node['ruby-deployment']['home']}/#{node['ruby-deployment']['application']['name']}-s3-config-fetcher.sh"
-config_fetcher_log_redirect = ">> /var/log/node/#{node['ruby-deployment']['name']}-cron-config.log 2>&1"
+config_fetcher_log_redirect = ">> /var/log/rubyapp/#{node['ruby-deployment']['application']['name']}-cron-config.log 2>&1"
 config_fetcher_command = "#{config_fetcher_script} #{config_fetcher_log_redirect}"
 config_fetcher_reloading_command = "#{config_fetcher_script} reload #{config_fetcher_log_redirect}"
 

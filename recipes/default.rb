@@ -53,7 +53,7 @@ package 'db2-install' do
 end
 
 # create the db2 odbc.ini file
-template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['application']['name']}/config/odbc.ini" do
+template "etc/odbc.ini" do
   source 'odbc_ini.erb'
   owner 'root'
   group 'root'
@@ -61,8 +61,8 @@ template "#{node['ruby-deployment']['homedir']}/#{node['ruby-deployment']['appli
   only_if { node['ruby-deployment-support']['odbc']['install'] }
 end
 
-include_recipe 'ruby-deployment-support::s3-config-fetcher'
-include_recipe 'ruby-deployment-support::s3-secrets-fetcher'
+include_recipe 'ruby-deployment-support::s3_config_fetcher'
+include_recipe 'ruby-deployment-support::s3_secrets_fetcher'
 
 # run your migrate command
 bash 'migrate' do

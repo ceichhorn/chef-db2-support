@@ -25,11 +25,11 @@ describe 'ruby-deployment-support::s3_config_fetcher' do
       )
     end
     it 'creates s3-config-fetcher with contents' do
-      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content(/TEMP_CONFIG_DIR="\/opt\/rubyapp\/test-configs"/)
-      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content(/TARGET_CONFIG_FILE="\/opt\/rubyapp\/test\/config\/\test-${ENVIRONMENT}-database.yml"/)
-      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content(/.*s3cmd -c \/opt\/rubyapp\/.s3cfg get s3:\/\/gdp-commerce-configs\/\test-${ENVIRONMENT}-database.yml \$TEMP_CONFIG_FILE.*/)
-      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content(/cp -v \$TEMP_CONFIG_FILE \$TARGET_CONFIG_FILE/)
-      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content(/service nginx restart/)
+      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content('TEMP_CONFIG_DIR="/opt/rubyapp/test-configs"')
+      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content('TARGET_CONFIG_FILE="/opt/rubyapp/test/config/test-$ENVIRONMENT-database.yml"')
+      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content('s3cmd -c /opt/rubyapp/.s3cfg get s3://gdp-commerce-configs/test-$ENVIRONMENT-database.yml $TEMP_CONFIG_FILE')
+      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content('cp -v $TEMP_CONFIG_FILE $TARGET_CONFIG_FILE')
+      expect(chef_run).to render_file('/opt/rubyapp/test-s3-config-fetcher.sh').with_content('service nginx restart')
     end
     it 'creates a cron entry' do
       expect(chef_run).to create_cron('s3-config-fetcher').with(
@@ -39,7 +39,7 @@ describe 'ruby-deployment-support::s3_config_fetcher' do
       )
     end
     it 'executes a fetch command as user node' do
-      expect(chef_run).to run_execute('su node -l -c \'/opt/rubyapp/test-s3-config-fetcher.sh >> /var/log/rubyapp/test-cron-config.log 2>&1\'').with_user('root')
+      expect(chef_run).to run_execute('su rubyapp -l -c \'/opt/rubyapp/test-s3-config-fetcher.sh >> /var/log/rubyapp/test-cron-config.log 2>&1\'').with_user('root')
 end
 
   end

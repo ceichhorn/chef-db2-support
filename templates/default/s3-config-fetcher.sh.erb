@@ -15,7 +15,7 @@ TEMP_CONFIG_DIR="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deploymen
 TEMP_CONFIG_FILE="${TEMP_CONFIG_DIR}/<%= node['ruby-deployment']['application']['name'] %>-$ENVIRONMENT-database.yml"
 
 # set target config file
-TARGET_CONFIG_FILE="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>/<%= node['ruby-deployment-support']['config-dir'] %>/<%= node['ruby-deployment']['application']['name'] %>-$ENVIRONMENT-database.yml"
+TARGET_CONFIG_FILE="<%= node['ruby-deployment']['home'] %>/<%= node['ruby-deployment']['application']['name'] %>/configs/database.yml"
 
 date
 echo "Fetching <%= node['ruby-deployment']['application']['name'] %>-$ENVIRONMENT-database.yml"
